@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>激活用户{{ username }}</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+激活用户{{ username }} -
+{% if status == "成功" %}
+    <span style="color: darkgreen">{{ status }}</span>,正在跳转到网页<a href="{{ url }}">首页</a>
+{% else %}
+    <span style="color: red">{{ status }}</span>,请联系管理员微信lyy910203, <a href="{{ url }}">首页</a>
+{% endif %}
+<span id="status" style="display: none">{{ status }}</span>
+</body>
+<script type="text/javascript">
+ function delayURL(){
+     let status = $("#status").text()
+     console.log("跳转")
+     console.log(status)
+     if(status === "成功"){
+         setTimeout(()=>{
+            {#window.open('{{ url }}')#}
+            window.location.replace("{{ url }}");
+            }, 3000)
+         {#setTimeout("top.location.href = '" + {{ url }} + "'",3000);#}
+     }
+ };
+ delayURL()
+</script>
+</html>

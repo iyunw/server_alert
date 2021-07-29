@@ -1,0 +1,15 @@
+.venv
+.idea
+.env
+*.pyc
+*.log
+db.sqlite3
+*.pid
+venv
+venv_linux
+static_root
+#migrations
+tmp/*.log
+tmp/dhcp.*
+tmp/*.xlsx
+
