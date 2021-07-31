@@ -40,7 +40,7 @@ def get_alert_bankend():
                 continue
             file_name = file.replace(".py", "")
             bankend.add((file_name, file_name))
-    print(bankend)
+    # print(bankend)
     return bankend
 
 
@@ -72,7 +72,7 @@ class BaseAlert(object):
             elif methed == "post":
                 resp = requests.post(url, headers=headers, data=json.dumps(data), timeout=timeout)
             resp_data = resp.json()
-            print(resp_data)
+            # print(resp_data)
             return self.request_status("OK", resp_data)
         except Exception as e:
             print(e)

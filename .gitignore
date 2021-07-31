@@ -13,5 +13,5 @@ tmp/*.log
 tmp/dhcp.*
 tmp/*.xlsx
 README.md
-server_alert/settings.py
+
 
