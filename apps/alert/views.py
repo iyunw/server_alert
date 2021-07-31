@@ -110,20 +110,6 @@ class PrometheusSendMessage(BaseSendMessage):
                 instance_data += f"------\n"
             self.data += instance_data
             flag += 1
-        # # print(self.title)
-        # print(self.data)
-        #
-        #
-        #
-        # return Response(data={"err": "aaaa"}, status=HTTP_400_BAD_REQUEST)
-        # try:
-        #     self.alert_group_ids = self.post_data.get("alert_group_ids", [])  # list
-        #     self.data = self.post_data.get("data", "")
-        #     self.title = self.post_data.get("title", "机器人")
-        #     self.alert_type = self.post_data.get("type", "text")
-        # except Exception as e:
-        #     print(e)
-        #     return Response(data={"err": str(e)}, status=HTTP_400_BAD_REQUEST)
 
 
 class GroupAlertServerModelViewSet(ModelViewSet):
