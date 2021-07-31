@@ -87,11 +87,10 @@ class PrometheusSendMessage(BaseSendMessage):
         获取基础数据封装
         :return:
         """
+        self.alert_group_ids = self.request.query_params.getlist("id")
         print(self.post_data)
         receiver = self.post_data.get("receiver", "") # 报警组
         count = len(self.post_data["alerts"])
-        # print(alertname)
-        # self.alert_group_ids = self.post_data.get("alert_group_ids", [])  # list
         self.alert_type = self.post_data.get("type", "text")
         self.title = f"[prometheus] [{receiver}]"
         self.data = f"{self.title}\n报警数: {count}\n------\n"
@@ -111,12 +110,12 @@ class PrometheusSendMessage(BaseSendMessage):
                 instance_data += f"------\n"
             self.data += instance_data
             flag += 1
-        # print(self.title)
-        print(self.data)
-
-
-
-        return Response(data={"err": "aaaa"}, status=HTTP_400_BAD_REQUEST)
+        # # print(self.title)
+        # print(self.data)
+        #
+        #
+        #
+        # return Response(data={"err": "aaaa"}, status=HTTP_400_BAD_REQUEST)
         # try:
         #     self.alert_group_ids = self.post_data.get("alert_group_ids", [])  # list
         #     self.data = self.post_data.get("data", "")
