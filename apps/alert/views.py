@@ -101,7 +101,7 @@ class PrometheusSendMessage(BaseSendMessage):
             alertname= instance["labels"]["alertname"]
             annotations= instance["annotations"]
 
-            instance_data = f"instance: {host}\nalertname: {alertname}\n"
+            instance_data = f"alertname: {alertname}\n"
 
             for k,v in dict(annotations).items():
                 instance_data += f"{k}: {v}\n"
