@@ -25,6 +25,7 @@ def get_alert_bankend_support():
 
     return resp
 
+
 def get_alert_bankend():
     """
     获取后端发送支持的列表，使整个系统动态
@@ -130,7 +131,17 @@ def send_alert(group_alert_server_obj, data, title="我的机器人", type="text
                 "errmsg": "报警组关闭"
             }
         }
+
     alert_obj = AlertHandler(group_alert_server_obj.type, group_alert_server_obj)
+    if type not in alert_obj.support_list():
+        return {
+            "alert_server": group_alert_server_obj.name,
+            "status": "FAILED",
+            "data": {
+                "errcode": 20002,
+                "errmsg": f"{group_alert_server_obj.name} 不支持发送类型{type}"
+            }
+        }
     if type == "text":
         resp = alert_obj.send_text(title=title, data=data)
     elif type == "markdown":
@@ -152,7 +163,8 @@ def get_alert_name_support(group_alert_server_id):
 
     name = alert_obj.name()
     support_list = alert_obj.support_list()
-    return name,support_list
+    return name, support_list
+
 
 if __name__ == "__main__":
     bankend = get_alert_bankend_support()

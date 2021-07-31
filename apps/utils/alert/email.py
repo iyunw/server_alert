@@ -3,7 +3,6 @@ from email.mime.text import MIMEText
 from email.header import Header
 from email.utils import formataddr
 from utils.base_alert import BaseAlert
-from user.models import AlertStatus, User
 
 
 class WebHookHandler(BaseAlert):

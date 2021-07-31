@@ -10,7 +10,7 @@ from user.models import UserStatus
 
 
 class ListBankend(APIView):
-    def get(self,request,*args, **kwargs):
+    def get(self, request, *args, **kwargs):
         resp = get_alert_bankend_support()
         return Response(data=resp, status=HTTP_200_OK)
 
@@ -26,10 +26,12 @@ class BaseSendMessage(APIView):
         for alert_group_id in self.alert_group_ids:
             group_alert_server_obj = GroupAlertServer.objects.filter(id=alert_group_id).first()
             if not group_alert_server_obj or group_alert_server_obj.create_user != self.request.user:
-                resp[alert_group_id] = {"status": "FAILE", "alert_server": "none","data": {"errmsg": "alert server id is not exits", "code": 403}}
+                resp[alert_group_id] = {"status": "FAILE", "alert_server": "none",
+                                        "data": {"errmsg": "alert server id is not exits", "code": 403}}
             else:
-                resp[alert_group_id] = send_alert(group_alert_server_obj=group_alert_server_obj, data=self.data, type=self.alert_type,
-                                  title=self.title)
+                resp[alert_group_id] = send_alert(group_alert_server_obj=group_alert_server_obj, data=self.data,
+                                                  type=self.alert_type,
+                                                  title=self.title)
         SendHistory.objects.create(user=self.request.user, request_data=self.post_data, respones_data=resp)
         return resp
 
@@ -48,7 +50,7 @@ class BaseSendMessage(APIView):
         :return:
         """
         try:
-            self.alert_group_ids = self.post_data.get("alert_group_ids", []) # list
+            self.alert_group_ids = self.post_data.get("alert_group_ids", [])  # list
             self.data = self.post_data.get("data", "")
             self.title = self.post_data.get("title", "机器人")
             self.alert_type = self.post_data.get("type", "text")
@@ -89,21 +91,17 @@ class PrometheusSendMessage(BaseSendMessage):
         """
         self.alert_group_ids = self.request.query_params.getlist("id")
         print(self.post_data)
-        receiver = self.post_data.get("receiver", "") # 报警组
+        receiver = self.post_data.get("receiver", "")  # 报警组
         count = len(self.post_data["alerts"])
         self.alert_type = self.post_data.get("type", "text")
         self.title = f"[prometheus] [{receiver}]"
         self.data = f"{self.title}\n报警数: {count}\n------\n"
         flag = 1
         for instance in self.post_data["alerts"]:
-
-            host = instance["labels"]["instance"]
-            alertname= instance["labels"]["alertname"]
-            annotations= instance["annotations"]
-
+            alertname = instance["labels"]["alertname"]
+            annotations = instance["annotations"]
             instance_data = f"alertname: {alertname}\n"
-
-            for k,v in dict(annotations).items():
+            for k, v in dict(annotations).items():
                 instance_data += f"{k}: {v}\n"
 
             if flag != len(self.post_data["alerts"]):
@@ -114,8 +112,9 @@ class PrometheusSendMessage(BaseSendMessage):
 
 class GroupAlertServerModelViewSet(ModelViewSet):
     serializer_class = GroupAlertServerSerializer
+
     def get_queryset(self):
-        resp = GroupAlertServer.objects.filter(create_user = self.request.user).exclude(status=Status.DELETE)
+        resp = GroupAlertServer.objects.filter(create_user=self.request.user).exclude(status=Status.DELETE)
         # print(get_alert_bankend_support())
         return resp
 

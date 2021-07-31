@@ -10,7 +10,6 @@ def get_alert_bankend():
     """
     bankend = set()
     for root, dirs, files in os.walk(os.path.join(BASE_DIR, "apps/utils/alert")):
-        # print(root, dirs, files)
         for file in files:
             if not str(file).endswith(".py"):
                 continue
@@ -18,7 +17,7 @@ def get_alert_bankend():
                 continue
             file_name = file.replace(".py", "")
             bankend.add((file_name, file_name))
-    print(bankend)
+    # print(bankend)
     return bankend
 
 

@@ -77,7 +77,6 @@ class WebHookHandler(BaseAlert):
         self.template_code = group_alert_server_obj.config.get("template_code", "")
         self.phones = group_alert_server_obj.config.get("phones", [])
 
-
     def send_text(self, data, title=""):
         resp = Sample.main(accessKeyId=self.accessKeyId, accessKeySecret=self.accessKeySecret, sign_name=self.sign_name,
                            template_code=self.template_code, template_param=str(data))
