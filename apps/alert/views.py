@@ -31,7 +31,14 @@ class BaseSendMessage(APIView):
                 resp[alert_group_id] = send_alert(group_alert_server_obj=group_alert_server_obj, data=self.data,
                                                   type=self.alert_type,
                                                   title=self.title)
-        SendHistory.objects.create(user=self.request.user, request_data=self.post_data, respones_data=resp)
+        SendHistory.objects.create(
+            user=self.request.user,
+            request_data={
+                "alert_group_ids": self.alert_group_ids,
+                "title": self.title,
+                "data": self.data
+            },
+            respones_data=resp)
         return resp
 
     def post(self, request, *args, **kwargs):
@@ -125,5 +132,5 @@ class SendHistoryViewSet(ReadOnlyModelViewSet):
     serializer_class = SendHistorySerializer
 
     def get_queryset(self):
-        resp = SendHistory.objects.filter(user = self.request.user)
+        resp = SendHistory.objects.filter(user=self.request.user)
         return resp
