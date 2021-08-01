@@ -33,6 +33,7 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', "").lower() in ["1", "true", "ye
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', "").lower() in ["1", "true", "yes"]
 BASE_URL = os.environ.get('BASE_URL', "")
 FONT_URL = os.environ.get('FONT_URL', "")
+DEFAULT_THROTTLE_RATES = os.environ.get('DEFAULT_THROTTLE_RATES', "")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -164,7 +165,15 @@ REST_FRAMEWORK = {
             'rest_framework.authentication.TokenAuthentication',
             'rest_framework.authentication.BasicAuthentication',
             'rest_framework.authentication.SessionAuthentication',
-        ) #认证方式，主要SessionAuthentication认证需要开启，不然api的URL无法登录
+        ), # 认证方式，主要SessionAuthentication认证需要开启，不然api的URL无法登录
+    'PAGE_SIZE': 10,  # 默认分页大小
+    'DEFAULT_PAGINATION_CLASS':"rest_framework.pagination.PageNumberPagination", # 设置所有视图默认分页函数，设置了其他视图可以不设置
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': DEFAULT_THROTTLE_RATES
+    }
 
 }
 
