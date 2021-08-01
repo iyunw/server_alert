@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.response import Response
 from utils.base_alert import send_alert, get_alert_bankend_support
 from alert.models import GroupAlertServer, SendHistory, Status
-from alert.serializers import GroupAlertServerSerializer
-from user.models import UserStatus
+from alert.serializers import GroupAlertServerSerializer, SendHistorySerializer
 
 
 class ListBankend(APIView):
@@ -120,3 +119,11 @@ class GroupAlertServerModelViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(create_user=self.request.user)
+
+
+class SendHistoryViewSet(ReadOnlyModelViewSet):
+    serializer_class = SendHistorySerializer
+
+    def get_queryset(self):
+        resp = SendHistory.objects.filter(user = self.request.user)
+        return resp

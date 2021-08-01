@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from alert.models import GroupAlertServer
+from alert.models import GroupAlertServer, SendHistory
 from utils.base_alert import get_alert_name_support
 from rest_framework import serializers
 
@@ -17,4 +17,12 @@ class GroupAlertServerSerializer(ModelSerializer):
         ret["type_name"],ret["support_list"] = get_alert_name_support(instance.id)
         ret["status"] = instance.get_status_display()
         return ret
+
+
+class SendHistorySerializer(ModelSerializer):
+
+    class Meta:
+        # exclude = ["config"]
+        fields = '__all__'
+        model = SendHistory
 

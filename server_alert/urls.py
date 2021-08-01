@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from alert.views import SendMessage, ListBankend, GroupAlertServerModelViewSet, PrometheusSendMessage
+from alert.views import SendMessage, ListBankend, GroupAlertServerModelViewSet, PrometheusSendMessage, SendHistoryViewSet
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
 from user.views import UserInfo, CustomAuthToken, Register, ActiveUser
 
 route = DefaultRouter()
 route.register('server', GroupAlertServerModelViewSet, basename="server")
+route.register('logs', SendHistoryViewSet, basename="logs")
 
 
 urlpatterns = [

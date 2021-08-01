@@ -167,7 +167,7 @@ REST_FRAMEWORK = {
             'rest_framework.authentication.SessionAuthentication',
         ), # 认证方式，主要SessionAuthentication认证需要开启，不然api的URL无法登录
     'PAGE_SIZE': 10,  # 默认分页大小
-    'DEFAULT_PAGINATION_CLASS':"rest_framework.pagination.PageNumberPagination", # 设置所有视图默认分页函数，设置了其他视图可以不设置
+    'DEFAULT_PAGINATION_CLASS': 'utils.drf.pagination.GlobalPageNumberPagination', # 设置所有视图默认分页函数，设置了其他视图可以不设置
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.UserRateThrottle'
     ],

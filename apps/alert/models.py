@@ -46,6 +46,7 @@ class GroupAlertServer(models.Model):
     class Meta:
         verbose_name = "报警服务器配置"
         verbose_name_plural = verbose_name
+        ordering = ["-id",]
 
 
 class SendHistory(models.Model):
@@ -60,3 +61,4 @@ class SendHistory(models.Model):
     class Meta:
         verbose_name = "发送历史内容"
         verbose_name_plural = verbose_name
+        ordering = ["-id", ]
