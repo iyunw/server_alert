@@ -23,7 +23,6 @@ class SendHistorySerializer(ModelSerializer):
     create_datetime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", input_formats=None)
 
     class Meta:
-        # exclude = ["config"]
         fields = '__all__'
         model = SendHistory
 
